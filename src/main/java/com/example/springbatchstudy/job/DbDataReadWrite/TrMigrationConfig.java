@@ -53,7 +53,7 @@ public class TrMigrationConfig {
     @JobScope
     @Bean
     public Step trMigrationStep(ItemReader trOrdersReader, ItemProcessor trOderProcessor,
-            RepositoryItemWriter trOrderWriter) {
+            ItemWriter trOrderWriter) {
         // reader > processor > writer 순으로 작업 진행
         return stepBuilderFactory.get("trMigrationStep")
                 .<Orders, Accounts>chunk(5) // 5개 단위로 처리
@@ -63,13 +63,24 @@ public class TrMigrationConfig {
                 .build();
     }
 
+    // @StepScope
+    // @Bean
+    // public RepositoryItemWriter<Accounts> trOrderWriter() {
+    // return new RepositoryItemWriterBuilder<Accounts>()
+    // .repository(accountsRepository)
+    // .methodName("save")
+    // .build();
+    // }
+
     @StepScope
     @Bean
-    public RepositoryItemWriter<Accounts> trOrderWriter() {
-        return new RepositoryItemWriterBuilder<Accounts>()
-                .repository(accountsRepository)
-                .methodName("save")
-                .build();
+    public ItemWriter<Accounts> trOrdersWriter() {
+        return new ItemWriter<Accounts>() {
+            @Override
+            public void write(List<? extends Accounts> items) throws Exception {
+                items.forEach(item -> accountsRepository.save(item));
+            }
+        };
     }
 
     @StepScope
