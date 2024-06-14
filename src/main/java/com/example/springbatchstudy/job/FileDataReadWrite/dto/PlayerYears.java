@@ -22,6 +22,7 @@ public class PlayerYears {
         this.position = player.getPosition();
         this.birthYear = player.getBirthYear();
         this.debutYear = player.getDebutYear();
+        // 현재년도-데뷔날짜 = 경력
         this.yearsExperience = Year.now().getValue() - player.getDebutYear();
     }
 
