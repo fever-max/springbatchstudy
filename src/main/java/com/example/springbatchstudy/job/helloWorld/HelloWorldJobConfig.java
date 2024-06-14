@@ -1,4 +1,4 @@
-package com.example.springbatchstudy.job;
+package com.example.springbatchstudy.job.helloWorld;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -11,7 +11,6 @@ import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -21,11 +20,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class HelloWorldJobConfig {
 
-    @Autowired
-    private JobBuilderFactory jobBuilderFactory;
-
-    @Autowired
-    private StepBuilderFactory stepBuilderFactory;
+    private final JobBuilderFactory jobBuilderFactory;
+    private final StepBuilderFactory stepBuilderFactory;
 
     @Bean
     public Job helloWorldJob() {
