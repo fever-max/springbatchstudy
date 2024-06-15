@@ -1,4 +1,14 @@
+# 기본 설정 (default)
 spring:
+  profiles:
+    active: local
+
+# 로컬 프로파일 설정 (local)
+---
+spring:
+  config:
+    activate:
+      on-profile: local
   batch:
     job:
       names: ${job.name:NONE}
@@ -14,3 +24,21 @@ spring:
   output:
     ansi:
       enabled: always
+
+# 테스트 프로파일 설정 (test)
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: true
+  h2:
+    console:
+      enabled: true
