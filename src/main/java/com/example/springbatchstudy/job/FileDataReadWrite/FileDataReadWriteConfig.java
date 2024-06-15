@@ -93,10 +93,12 @@ public class FileDataReadWriteConfig {
         fieldExtractor.setNames(new String[] { "ID", "lastName", "position", "yearsExperience" });
         fieldExtractor.afterPropertiesSet();
 
+        // 파일 생성 기준
         DelimitedLineAggregator<PlayerYears> lineAggregator = new DelimitedLineAggregator<>();
         lineAggregator.setDelimiter("=");
         lineAggregator.setFieldExtractor(fieldExtractor);
 
+        // 파일 아웃풋
         FileSystemResource outputResource = new FileSystemResource("players_outputs.txt");
 
         return new FlatFileItemWriterBuilder<PlayerYears>()
